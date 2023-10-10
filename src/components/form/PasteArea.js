@@ -5,6 +5,8 @@ import { Listbox, Transition } from '@headlessui/react'
 import Editor from '@monaco-editor/react'
 
 import { CodeBracketIcon } from '@heroicons/react/20/solid'
+import { useTheme } from 'next-themes'
+import classNames from 'classnames'
 
 const languages = [
   {
@@ -37,19 +39,16 @@ const languages = [
   },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function PasteArea() {
   const [language, setLanguage] = useState(languages[0])
+  const { theme } = useTheme()
 
   const code = "console.log('Monaco Editor!');";
 
   return (
     <div className="container mx-auto px-4 w-2/4">
       <form action="#" className="relative">
-        <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+        <div className="overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 dark:bg-zinc-800 dark:text-gray-100">
           <label htmlFor="title" className="sr-only">
             Title
           </label>
@@ -57,7 +56,7 @@ export default function PasteArea() {
             type="text"
             name="title"
             id="title"
-            className="block w-full border-0 pt-2.5 text-lg font-medium placeholder:text-gray-400 focus:ring-0"
+            className="block w-full border-0 pt-2.5 text-lg font-medium placeholder:text-gray-400 focus:ring-0 dark:bg-zinc-800 dark:text-gray-300"
             placeholder="Title"
           />
           <label htmlFor="description" className="sr-only">
@@ -67,7 +66,7 @@ export default function PasteArea() {
           <Editor
             height="350px"
             language={language.value}
-            theme="light"
+            theme={theme === 'dark' ? 'vs-dark' : 'light'}
             value={code}
             options={{
               minimap: {
@@ -98,17 +97,17 @@ export default function PasteArea() {
                 <>
                   <Listbox.Label className="sr-only">Add a label</Listbox.Label>
                   <div className="relative">
-                    <Listbox.Button className="relative inline-flex items-center whitespace-nowrap rounded-full bg-gray-50 px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 sm:px-3">
+                    <Listbox.Button className="relative inline-flex items-center whitespace-nowrap rounded-full bg-gray-50 px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 dark:hover:bg-zinc-600 sm:px-3 dark:bg-zinc-700">
                       <CodeBracketIcon
                         className={classNames(
-                          language.value === null ? 'text-gray-300' : 'text-gray-500',
+                          language.value === null ? 'text-gray-300 dark:text-gray-200' : 'text-gray-500 dark:text-gray-100',
                           'h-5 w-5 flex-shrink-0 sm:-ml-1'
                         )}
                         aria-hidden="true"
                       />
                       <span
                         className={classNames(
-                          language.value === null ? '' : 'text-gray-900',
+                          language.value === null ? '' : 'text-gray-900 dark:text-gray-100',
                           'hidden truncate sm:ml-2 sm:block'
                         )}
                       >
@@ -123,13 +122,13 @@ export default function PasteArea() {
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
-                      <Listbox.Options className="absolute right-0 z-10 mt-1 max-h-56 w-52 overflow-auto rounded-lg bg-white py-3 text-base shadow ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      <Listbox.Options className="absolute right-0 z-10 mt-1 max-h-56 w-52 overflow-auto rounded-lg bg-white dark:bg-zinc-800 py-3 text-base shadow ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {languages.map((label) => (
                           <Listbox.Option
                             key={label.value}
                             className={({ active }) =>
                               classNames(
-                                active ? 'bg-gray-100' : 'bg-white',
+                                active ? 'bg-gray-100 dark:bg-zinc-700' : 'bg-white dark:bg-zinc-800',
                                 'relative cursor-default select-none px-3 py-2'
                               )
                             }
