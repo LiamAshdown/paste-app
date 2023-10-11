@@ -1,5 +1,8 @@
 import './globals.css'
 import { Providers } from '@/app/providers'
+import Footer from '@/components/Footer'
+import Nav from '@/components/nav/Nav'
+import classNames from 'classnames'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,8 +15,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
+      <body className={classNames(inter.className, 'bg-gray-100 dark:bg-zinc-900')}>
+        <Providers>
+          <Nav />
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   )

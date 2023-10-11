@@ -16,6 +16,8 @@ const DarkLightToggle = () => {
     return null
   }
 
+  console.log(theme)
+
   return (
     <>
       { theme === 'dark' && (
