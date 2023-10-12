@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import Item from './Item'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -9,22 +9,39 @@ import MobileItem from './MobileItem'
 
 
 export default function Nav() {
+  useEffect(() => {
+    const nav = document.querySelector('nav')
+    const navTop = nav.offsetTop
+
+    const stickyNav = () => {
+      if (window.scrollY >= navTop) {
+        nav.classList.add('sticky')
+      } else {
+        nav.classList.remove('sticky')
+      }
+    }
+
+    window.addEventListener('scroll', stickyNav)
+
+    return () => {
+      window.removeEventListener('scroll', stickyNav)
+    }
+  }, [])
+
   return (
-    <Disclosure as="nav" className="bg-white dark:bg-gray-800 shadow">
+    <Disclosure as="nav" className="w-full top-0 bg-white dark:bg-gray-800 shadow-lg z-50">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
-                  />
+                  <span className="text-gradient">
+                    123Paste
+                  </span>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  <Item href="/about">Wiki</Item>
+                  <Item href="/about">Github</Item>
                   <Item href="/about">Contact</Item>
                 </div>
               </div>
@@ -48,7 +65,7 @@ export default function Nav() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
-              <MobileItem href="/wiki">Wiki</MobileItem>
+              <MobileItem href="/wiki">Github</MobileItem>
               <MobileItem href="/contact">Contact</MobileItem>
             </div>
           </Disclosure.Panel>

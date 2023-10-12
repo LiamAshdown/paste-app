@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CodeBracketIcon, ClockIcon } from '@heroicons/react/20/solid'
+import { CodeBracketIcon, ClockIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import Editor from '@monaco-editor/react'
 import BubbleDropdown from '@/components/form/BubbleDropdown'
 
@@ -73,15 +73,59 @@ const expires = [
 export default function PasteArea() {
   const [language, setLanguage] = useState(languages[0])
   const [expire, setExpire] = useState(expires[0])
+  const [code, setCode] = useState('')
   const { theme } = useTheme()
 
-  const code = "console.log('Monaco Editor!');";
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    const form = {
+      language: language.value,
+      expire: expire.value,
+      code: code,
+    }
+
+    try {
+      // Send Post
+      fetch('/api/paste', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+        })
+    } catch {
+
+    }
+  }
 
   return (
-    <div className="container mx-auto px-4 lg:w-2/4 my-12">
-      <div className="rainbow">
-        <form action="#" className="relative">
-          <div className="overflow-hidden rounded-lg border border-gray-300 dark:border-zinc-600 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 bg-white dark:bg-zinc-800 dark:text-gray-100">
+    <div className="container mx-auto px-4 lg:w-2/4 my-24">
+      <div>
+        <div className="grid grid-cols-12 justify-center items-center gap-4 text-center mb-12">
+          <div></div>
+          <div className="flex items-center justify-around space-x-2 col-span-4">
+            Paste
+            <ChevronRightIcon width={40} />
+          </div>
+          <div className="flex items-center justify-around space-x-2 col-span-4">
+            Create
+            <ChevronRightIcon width={40} />
+          </div>
+          <div className="flex items-center justify-around space-x-2">
+            <div className="gradient-border flex justify-center items-center text-white">
+              Share
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="gradient-border flex justify-center items-center">
+        <form action="#" className="relative w-full" onSubmit={onSubmit}>
+          <div className="overflow-hidden border border-gray-300 dark:border-zinc-600 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 bg-white dark:bg-zinc-800 dark:text-gray-100">
             <label htmlFor="title" className="sr-only">
               Title
             </label>
@@ -107,6 +151,7 @@ export default function PasteArea() {
                 },
                 contextmenu: false
               }}
+              onChange={(value) => setCode(value)}
             />
 
             {/* Spacer element to match the height of the toolbar */}
