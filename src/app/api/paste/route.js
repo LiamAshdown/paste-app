@@ -1,41 +1,36 @@
+import { encryptSnippet } from '@/lib/crypt'
+import clientPromise from '@/lib/mongodb'
 import { NextResponse } from 'next/server'
-import crypto from 'crypto'
-import { createGzip, createGunzip } from 'zlib'
 
+/**
+ * Handles POST requests to create a new encrypted code snippet.
+ * @param {Request} request - The incoming request object.
+ * @returns {NextResponse} - The response object containing the encrypted code snippet.
+ */
 export async function POST(request) {
-  const res = await request.json()
+  const { title, code, expire, language } = await request.json()
 
-  const data = res.code
+  const encrypted = encryptSnippet(code)
+  const expireDate = new Date(Date.now() + expire * 1000)
 
-  // Compress the data
-  const compressedData = await new Promise((resolve, reject) => {
-    const gzip = createGzip();
-    let compressed = Buffer.from('');
+  const encryptedCode = {
+    title,
+    code: encrypted.encryptedText,
+    iv: encrypted.iv,
+    expire,
+    expireAt: expireDate,
+    language,
+  }
 
-    gzip.on('data', (chunk) => {
-      compressed = Buffer.concat([compressed, chunk]);
-    });
+  const response = await clientPromise.then((client) => {
+    const db = client.db()
+    const collection = db.collection('snippets')
+    const response = collection.insertOne(encryptedCode)
 
-    gzip.on('end', () => {
-      resolve(compressed);
-    });
-
-    gzip.end(data);
+    return response
   })
 
-  // Encrypt the compressed data
-  const encryptionKey = crypto.scryptSync('test', 'salt', 32);
-  const iv = crypto.randomBytes(16); // Initialization Vector
-
-  const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(encryptionKey), iv);
-  const encryptedData = Buffer.concat([cipher.update(compressedData), cipher.final()]);
-
-  // Encode the encrypted data and create the URL
-  const urlSafeData = encodeURIComponent(encryptedData.toString('base64'))
-  const url = `https://example.com/paste?data=${urlSafeData}`
-
-
   return NextResponse.json({
-    url: url
+    id: response.insertedId,
   })
 }

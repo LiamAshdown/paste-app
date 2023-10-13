@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { CodeBracketIcon, ClockIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import { CodeBracketIcon, ClockIcon, ChevronRightIcon, ArrowUpTrayIcon } from '@heroicons/react/20/solid'
 import Editor from '@monaco-editor/react'
 import BubbleDropdown from '@/components/form/BubbleDropdown'
 
 import { useTheme } from 'next-themes'
-import classNames from 'classnames'
+import Button from '@/components/Button'
+import { useModal } from '@/providers/modal'
+import { Success } from '../modal/Success'
 
 const languages = [
   {
@@ -74,7 +76,10 @@ export default function PasteArea() {
   const [language, setLanguage] = useState(languages[0])
   const [expire, setExpire] = useState(expires[0])
   const [code, setCode] = useState('')
+  const [title, setTitle] = useState('')
+  const [loading, setLoading] = useState(false)
   const { theme } = useTheme()
+  const { dispatch } = useModal()
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -83,9 +88,18 @@ export default function PasteArea() {
       language: language.value,
       expire: expire.value,
       code: code,
+      title: title
+    }
+
+
+    if (!code.length) {
+      // No Code? No Submit!
+      return
     }
 
     try {
+      setLoading(true)
+
       // Send Post
       fetch('/api/paste', {
         method: 'POST',
@@ -98,14 +112,25 @@ export default function PasteArea() {
         .then((data) => {
           console.log(data)
         })
+
+      dispatch({
+        type: 'OPEN_MODAL',
+        Content: Success
+      })
+
     } catch {
 
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <div className="container mx-auto px-4 lg:w-2/4 my-24">
       <div>
+        <p className="text-base font-semibold leading-7 text-indigo-600 dark:text-blue-300 text-center mb-8">
+          Takes 3 steps to share code snippets. No account required.
+        </p>
         <div className="grid grid-cols-12 justify-center items-center gap-4 text-center mb-12">
           <div></div>
           <div className="flex items-center justify-around space-x-2 col-span-4">
@@ -125,7 +150,7 @@ export default function PasteArea() {
       </div>
       <div className="gradient-border flex justify-center items-center">
         <form action="#" className="relative w-full" onSubmit={onSubmit}>
-          <div className="overflow-hidden border border-gray-300 dark:border-zinc-600 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 bg-white dark:bg-zinc-800 dark:text-gray-100">
+          <div className="border border-gray-300 dark:border-zinc-600 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500 bg-white dark:bg-zinc-800 dark:text-gray-100">
             <label htmlFor="title" className="sr-only">
               Title
             </label>
@@ -133,6 +158,8 @@ export default function PasteArea() {
               type="text"
               name="title"
               id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               className="block w-full border-0 pt-2.5 text-lg font-medium placeholder:text-gray-400 focus:ring-0 dark:bg-zinc-800 dark:text-gray-300"
               placeholder="Title"
             />
@@ -185,12 +212,7 @@ export default function PasteArea() {
             </div>
             <div className="flex items-center justify-end space-x-3 border-t border-gray-200 dark:border-zinc-600 px-2 py-2 sm:px-3">
               <div>
-                <button
-                  type="submit"
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Create
-                </button>
+                <Button type="submit" Icon={ArrowUpTrayIcon} loading={loading}>Create Snippet</Button>
               </div>
             </div>
           </div>
