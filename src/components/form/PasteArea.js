@@ -72,27 +72,27 @@ const expires = [
   },
 ]
 
+const initialState = {
+  language: languages[0],
+  expire: expires[0],
+  code: '',
+  title: '',
+}
+
 export default function PasteArea() {
-  const [language, setLanguage] = useState(languages[0])
-  const [expire, setExpire] = useState(expires[0])
-  const [code, setCode] = useState('')
-  const [title, setTitle] = useState('')
+  const [form, setForm] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const { theme } = useTheme()
   const { dispatch } = useModal()
 
+  const onChange = (key, value) => {
+    setForm({ ...form, [key]: value })
+  }
+
   const onSubmit = (e) => {
     e.preventDefault()
 
-    const form = {
-      language: language.value,
-      expire: expire.value,
-      code: code,
-      title: title
-    }
-
-
-    if (!code.length) {
+    if (!form.code.length) {
       // No Code? No Submit!
       return
     }
@@ -106,12 +106,18 @@ export default function PasteArea() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          language: form.language.value,
+          expire: form.expire.value,
+        }),
       })
         .then((res) => res.json())
         .then((data) => {
           console.log(data)
         })
+
+      setForm(initialState)
 
       dispatch({
         type: 'OPEN_MODAL',
@@ -158,8 +164,8 @@ export default function PasteArea() {
               type="text"
               name="title"
               id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={form.title}
+              onChange={(e) => onChange('title', e.target.value)}
               className="block w-full border-0 pt-2.5 text-lg font-medium placeholder:text-gray-400 focus:ring-0 dark:bg-zinc-800 dark:text-gray-300"
               placeholder="Title"
             />
@@ -169,16 +175,16 @@ export default function PasteArea() {
 
             <Editor
               height="350px"
-              language={language.value}
+              language={form.language.value}
               theme={theme === 'dark' ? 'vs-dark' : 'light'}
-              value={code}
+              value={form.code}
               options={{
                 minimap: {
                   enabled: false,
                 },
                 contextmenu: false
               }}
-              onChange={(value) => setCode(value)}
+              onChange={(value) => onChange('code', value)}
             />
 
             {/* Spacer element to match the height of the toolbar */}
@@ -198,15 +204,15 @@ export default function PasteArea() {
           <div className="absolute inset-x-px bottom-0">
             <div className="flex flex-nowrap justify-end space-x-2 px-2 py-2 sm:px-3  border-t border-gray-200 dark:border-zinc-600 ">
               <BubbleDropdown
-                item={expire}
+                item={form.expire}
                 options={expires}
-                onChange={setExpire}
+                onChange={(value) => onChange('expire', value)}
                 Icon={ClockIcon}
               />
               <BubbleDropdown
-                item={language}
+                item={form.language}
                 options={languages}
-                onChange={setLanguage}
+                onChange={(value) => onChange('language', value)}
                 Icon={CodeBracketIcon}
               />
             </div>
