@@ -1,7 +1,6 @@
 const navigation = {
   main: [
-    { name: 'Github', href: '#' },
-    { name: 'Contact', href: '#' }
+    { name: 'Github', href: '#' }
   ],
   social: [
     {
