@@ -153,6 +153,7 @@ export default function PasteArea({ snippet = null }) {
             onChange={(e) => onChange('title', e.target.value)}
             className="block w-full border-0 pt-2.5 text-lg font-medium placeholder:text-gray-400 focus:ring-0 dark:bg-zinc-800 dark:text-gray-300"
             placeholder="Title"
+            disabled={!!snippet}
           />
           <label htmlFor="description" className="sr-only">
             Description
@@ -164,10 +165,18 @@ export default function PasteArea({ snippet = null }) {
             theme={theme === 'dark' ? 'vs-dark' : 'light'}
             value={form.code}
             options={{
+              readOnly: !!snippet,
               minimap: {
                 enabled: false,
               },
-              contextmenu: false
+              contextmenu: false,
+              suggest: {
+                enabled: false,
+              },
+              inlineSuggest: {
+                enabled: false,
+              },
+              quickSuggestions: false
             }}
             onChange={(value) => onChange('code', value)}
           />
@@ -214,7 +223,7 @@ export default function PasteArea({ snippet = null }) {
                   onClick={onCopySnippet}
                   variant={onCopySuccess ? 'success' : 'primary'}
                 >
-                  {onCopySuccess ? 'Copied!' : 'Copy link'}
+                  {onCopySuccess ? 'Copied!' : 'Copy Snippet'}
                 </Button>
               )}
             </div>

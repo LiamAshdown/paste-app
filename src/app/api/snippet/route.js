@@ -18,13 +18,19 @@ export async function GET(request) {
     return response
   })
 
-  if (!response) {
-    return NextResponse.error(`Snippet with ID ${id} not found`)
-  }
+  let snippet = null
 
-  const snippet = {
-    ...response,
-    code: decryptSnippet(response.code, response.iv)
+  if (response) {
+    if (response.expire.value !== 0 && response.expireAt < new Date()) {
+      snippet = {
+        expired: true
+      }
+    } else {
+      snippet = {
+        ...response,
+        code: decryptSnippet(response.code, response.iv)
+      }
+    }
   }
 
   return NextResponse.json(snippet)

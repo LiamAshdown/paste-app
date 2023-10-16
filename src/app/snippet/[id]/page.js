@@ -1,4 +1,5 @@
-import PasteArea from "@/components/form/PasteArea"
+import PasteArea from '@/components/form/PasteArea'
+import { notFound } from 'next/navigation'
 
 
 async function getData(id) {
@@ -8,8 +9,7 @@ async function getData(id) {
   })
 
   if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
+    return null
   }
 
   return res.json()
@@ -18,11 +18,23 @@ async function getData(id) {
 const Snippet = async ({ params }) => {
   const data = await getData(params.id)
 
-  console.log('data', data)
+  console.log(data)
+
+  if (!data) {
+    notFound()
+  }
 
   return (
-    <div className="container mx-auto px-4 lg:w-2/4 my-24">
-      <PasteArea snippet={data} />
+    <div className="container mx-auto px-4 lg:w-3/4 my-24">
+      {data.expired && (
+        <div>
+          <h1 className="text-3xl font-bold text-center">Snippet has expired</h1>
+          <p className="text-center">This snippet has expired and is no longer available.</p>
+        </div>
+      )}
+      {!data.expired && (
+        <PasteArea snippet={data} />
+      )}
     </div>
   )
 }
