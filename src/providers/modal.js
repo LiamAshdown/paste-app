@@ -13,7 +13,7 @@ const initialModalState = {
 const modalReducer = (state, action) => {
   switch (action.type) {
     case 'OPEN_MODAL':
-      return { isOpen: true, Content: action.Content }
+      return { isOpen: true, Content: action.Content, meta: action.meta }
     case 'CLOSE_MODAL':
       return {
         ...state,

@@ -2,9 +2,9 @@ import { Listbox, Transition } from '@headlessui/react'
 import classNames from 'classnames'
 import { Fragment } from 'react'
 
-const BubbleDropdown = ({ item, options, onChange, Icon }) => {
+const BubbleDropdown = ({ item, options, disable = false, onChange, Icon }) => {
   return (
-    <Listbox as="div" value={item} onChange={onChange} className="flex-shrink-0">
+    <Listbox as="div" value={item} onChange={onChange} disabled={disable} className={classNames("flex-shrink-0")}>
       {({ open }) => (
         <>
           <Listbox.Label className="sr-only">Add a label</Listbox.Label>

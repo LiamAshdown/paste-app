@@ -6,6 +6,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import DarkLightToggle from './DarkLightToggle'
 import MobileItem from './MobileItem'
+import Link from 'next/link'
 
 
 export default function Nav() {
@@ -36,9 +37,9 @@ export default function Nav() {
             <div className="flex h-16 justify-between">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center">
-                  <span className="text-gradient">
+                  <Link className="text-gradient" href="/">
                     123Paste
-                  </span>
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   <Item href="/about">Github</Item>

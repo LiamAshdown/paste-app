@@ -11,7 +11,7 @@ export async function POST(request) {
   const { title, code, expire, language } = await request.json()
 
   const encrypted = encryptSnippet(code)
-  const expireDate = new Date(Date.now() + expire * 1000)
+  const expireDate = new Date(Date.now() + expire.value * 1000)
 
   const encryptedCode = {
     title,
@@ -30,7 +30,11 @@ export async function POST(request) {
     return response
   })
 
+  // Build the URL
+  const url = new URL(request.headers.get('referer'))
+  url.pathname = `/snippet/${response.insertedId}`
+
   return NextResponse.json({
-    id: response.insertedId,
+    url: url.toString()
   })
 }

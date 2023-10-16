@@ -23,22 +23,25 @@ export const encryptSnippet = (data) => {
     iv: iv.toString('hex'),
     encryptedText: Buffer.from(
       cipher.update(data, 'utf8', 'hex') + cipher.final('hex')
-    ).toString('base64')
+    ).toString()
   }
 }
 
 /**
- * Decrypts the encrypted data using the encryption method, secret key, and initialization vector.
- * @param {Object} encryptedData - The encrypted data to be decrypted.
- * @param {string} encryptedData.encryptedText - The encrypted text to be decrypted.
- * @param {string} encryptedData.iv - The initialization vector used for encryption.
- * @returns {string} - The decrypted data in utf8 format.
+ * Decrypts the given data using the provided initialization vector (iv).
+ *
+ * @param {string} data - The data to be decrypted.
+ * @param {Buffer} iv - The initialization vector to be used for decryption.
+ * @returns {string} The decrypted data.
  */
-export const decryptSnippet = (encryptedData) => {
-  const buff = Buffer.from(encryptedData.encryptedText, 'base64')
-  const decipher = crypto.createDecipheriv(encryptionMethod, secretKey, encryptedData.iv)
-  return (
-    decipher.update(buff.toString('utf8'), 'hex', 'utf8') +
-    decipher.final('utf8')
+export const decryptSnippet = (data, iv) => {
+  const decipher = crypto.createDecipheriv(
+    encryptionMethod,
+    secretKey,
+    Buffer.from(iv, 'hex')
   )
+
+  return Buffer.from(
+    decipher.update(data, 'hex') + decipher.final()
+  ).toString('utf8')
 }

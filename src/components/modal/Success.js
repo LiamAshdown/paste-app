@@ -4,15 +4,23 @@ import { Dialog } from '@headlessui/react'
 import { CheckIcon, ClipboardIcon, ArrowTopRightOnSquareIcon, CheckBadgeIcon } from '@heroicons/react/24/outline'
 import Button from '@/components/Button'
 import { useState } from 'react'
+import { useModal } from '@/providers/modal'
 
 export const Success = () => {
+  const { modalState } = useModal()
   const [onCopySuccess, setOnCopySuccess] = useState(false)
+
+
   const onCopy = () => {
     setOnCopySuccess(true)
 
     setTimeout(() => {
       setOnCopySuccess(false)
     }, 2000)
+  }
+
+  const onGoToSnippet = () => {
+    window.location.href = modalState.meta.url
   }
 
   return (
@@ -42,6 +50,7 @@ export const Success = () => {
         </Button>
         <Button
           Icon={ArrowTopRightOnSquareIcon}
+          onClick={onGoToSnippet}
         >
           Go to Snippet
         </Button>

@@ -10,3 +10,4 @@ export function Providers({ children }) {
     </ModalProvider>
   </ThemeProvider>
 }
+
