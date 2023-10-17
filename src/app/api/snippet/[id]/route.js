@@ -37,7 +37,9 @@ export async function GET(request, context) {
       }
     } else {
       snippet = {
-        ...response,
+        expire: response.expire,
+        language: response.language,
+        title: response.title,
         code: decryptSnippet(response.code, response.iv)
       }
     }
