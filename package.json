@@ -20,6 +20,7 @@
     "react": "^18",
     "react-card-memory-game": "^1.1.6",
     "react-dom": "^18",
+    "react-toastify": "^9.1.3",
     "zlib": "^1.0.5"
   },
   "devDependencies": {

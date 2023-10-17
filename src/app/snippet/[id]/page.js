@@ -4,9 +4,8 @@ import { notFound } from 'next/navigation'
 
 
 async function getData(id) {
-  const res = await fetch(`${process.env.BASE_URL}/api/snippet?id=${id}`, {
-    method: 'GET',
-    cache: 'no-cache'
+  const res = await fetch(`${process.env.BASE_URL}/api/snippet/${id}`, {
+    method: 'GET'
   })
 
   if (!res.ok) {

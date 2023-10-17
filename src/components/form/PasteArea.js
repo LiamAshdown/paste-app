@@ -6,6 +6,7 @@ import Editor from '@monaco-editor/react'
 import BubbleDropdown from '@/components/form/BubbleDropdown'
 
 import { useTheme } from 'next-themes'
+import { toast } from 'react-toastify'
 import Button from '@/components/Button'
 import { useModal } from '@/providers/modal'
 import { Success } from '../modal/Success'
@@ -139,7 +140,9 @@ export default function PasteArea({ snippet = null }) {
       })
 
     } catch {
-
+      toast('Something went wrong, please try again later.', {
+        type: 'error'
+      })
     } finally {
       setLoading(false)
     }

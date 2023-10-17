@@ -8,9 +8,8 @@ import { NextResponse } from 'next/server'
  * @param {Request} request - The incoming request object.
  * @returns {NextResponse} The response object containing the snippet data as JSON.
  */
-export async function GET(request) {
-  const url = new URL(request.url)
-  const id = url.searchParams.get('id')
+export async function GET(request, context) {
+  const id = context.params.id
 
   const response = await clientPromise.then(async (client) => {
     const db = client.db()

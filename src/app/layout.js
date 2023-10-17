@@ -1,10 +1,13 @@
 import './globals.css'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { Providers } from '@/app/providers'
 import Footer from '@/components/Footer'
 import Modal from '@/components/modal/Modal'
 import Nav from '@/components/nav/Nav'
 import classNames from 'classnames'
 import { Inter } from 'next/font/google'
+import ToastContainerLayout from '@/components/ToastContainerLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,6 +25,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
           <Modal />
+          <ToastContainerLayout />
         </Providers>
       </body>
     </html>
