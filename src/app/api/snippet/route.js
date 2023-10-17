@@ -3,8 +3,11 @@ import clientPromise from '@/lib/mongodb'
 import { ObjectId } from 'mongodb'
 import { NextResponse } from 'next/server'
 
-export const dynamic = 'force-dynamic'
-
+/**
+ * Retrieves a snippet by ID from the database and returns it as a JSON response.
+ * @param {Request} request - The incoming request object.
+ * @returns {NextResponse} The response object containing the snippet data as JSON.
+ */
 export async function GET(request) {
   const url = new URL(request.url)
   const id = url.searchParams.get('id')
