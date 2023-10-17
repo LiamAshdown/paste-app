@@ -27,7 +27,7 @@ const Snippet = async ({ params }) => {
     <div className="container mx-auto px-4 lg:w-3/4 my-24">
       {data.expired && (
         <div>
-          <h1 className="text-3xl font-bold text-center">Snippet has expired</h1>
+          <h1 className="text-3xl font-bold text-center text-gradient">Snippet has expired</h1>
           <p className="text-center">This snippet has expired and is no longer available.</p>
 
           <p className="text-center mt-12 mb-2 text-lg">To reward you for trying out <span className="text-gradient font-bold">123Paste</span>, here&apos;s a game of cards!</p>
