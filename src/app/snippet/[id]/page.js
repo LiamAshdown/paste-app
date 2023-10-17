@@ -25,7 +25,7 @@ const Snippet = async ({ params }) => {
 
   return (
     <div className="container mx-auto px-4 lg:w-3/4 my-24">
-      {!data.expired && (
+      {data.expired && (
         <div>
           <h1 className="text-3xl font-bold text-center">Snippet has expired</h1>
           <p className="text-center">This snippet has expired and is no longer available.</p>
@@ -34,7 +34,7 @@ const Snippet = async ({ params }) => {
           <CardGame />
         </div>
       )}
-      {data.expired && (
+      {!data.expired && (
         <PasteArea snippet={data} />
       )}
     </div>
