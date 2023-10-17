@@ -5,6 +5,7 @@ import { CheckIcon, ClipboardIcon, ArrowTopRightOnSquareIcon, CheckBadgeIcon } f
 import Button from '@/components/Button'
 import { useState } from 'react'
 import { useModal } from '@/providers/modal'
+import { copyToClipboard } from '@/lib/utils'
 
 export const Success = () => {
   const { modalState } = useModal()

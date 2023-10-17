@@ -9,6 +9,7 @@ import { useTheme } from 'next-themes'
 import Button from '@/components/Button'
 import { useModal } from '@/providers/modal'
 import { Success } from '../modal/Success'
+import { copyToClipboard } from '@/lib/utils'
 
 const languages = [
   {
