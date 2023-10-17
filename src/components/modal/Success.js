@@ -14,6 +14,8 @@ export const Success = () => {
   const onCopy = () => {
     setOnCopySuccess(true)
 
+    copyToClipboard(modalState.meta.url)
+
     setTimeout(() => {
       setOnCopySuccess(false)
     }, 2000)

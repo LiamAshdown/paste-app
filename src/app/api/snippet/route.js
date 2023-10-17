@@ -22,6 +22,14 @@ export async function GET(request) {
 
   if (response) {
     if (response.expire.value !== 0 && response.expireAt < new Date()) {
+      // Delete the expired snippet
+      await clientPromise.then(async (client) => {
+        const db = client.db()
+        const collection = db.collection('snippets')
+
+        await collection.deleteOne({ _id: new ObjectId(id) })
+      })
+
       snippet = {
         expired: true
       }

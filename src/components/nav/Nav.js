@@ -42,7 +42,7 @@ export default function Nav() {
                   </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                  <Item href="/about">Github</Item>
+                  <Item href="https://github.com/LiamAshdown/paste-app">Github</Item>
                 </div>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:items-center">
@@ -65,7 +65,7 @@ export default function Nav() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 pb-3 pt-2">
-              <MobileItem href="/wiki">Github</MobileItem>
+              <MobileItem href="https://github.com/LiamAshdown/paste-app">Github</MobileItem>
             </div>
           </Disclosure.Panel>
         </>

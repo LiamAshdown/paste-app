@@ -13,9 +13,9 @@ const faqs = [
   },
   {
     id: 3,
-    question: "How can I report inappropriate content or abuse?",
+    question: "Is this project open source?",
     answer:
-      "If you come across any content that violates our guidelines or is abusive, please contact us using the provided contact information on our website. We will take appropriate action to address such issues.",
+      "Yes, this project is open source and available on GitHub. You can find the link to the repository in the footer of this page.",
   },
 ]
 

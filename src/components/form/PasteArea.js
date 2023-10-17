@@ -74,7 +74,7 @@ const expires = [
 
 const initialState = {
   language: languages[0],
-  expire: expires[0],
+  expire: expires[1],
   code: '',
   title: '',
 }
@@ -93,6 +93,8 @@ export default function PasteArea({ snippet = null }) {
 
   const onCopySnippet = () => {
     setOnCopySuccess(true)
+
+    copyToClipboard(form.code)
 
     setTimeout(() => {
       setOnCopySuccess(false)
