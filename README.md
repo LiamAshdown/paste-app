@@ -2,12 +2,16 @@
 
 This is a simple pastebin clone built with Next.js and MongoDB.
 
+This is an educational project to learn Next.js and MongoDB. It is not intended to be used in production.
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLiamAshdown%2Fpaste-app.git&env=SECRET_KEY,BASE_URL,MONGODB_URI&envDescription=These%20API%20keys%20are%20needed%20for%20the%20web%20app.%20The%20SECRET_KEY%20is%20used%20for%20encryption%2C%20the%20BASE_URL%20will%20be%20the%20URL%20of%20the%20app%20and%20MONGODB_URI%20is%20the%20connection%20string%20to%20your%20MongoDB%20instance.&project-name=123-paste-bin-clone&repository-name=123-paste-bin-clone&demo-title=123%20Pastebin%20App%20&demo-description=A%20simple%20pastebin%20clone%20using%20Next.js%20and%20MongoDB.&demo-url=https%3A%2F%2Fpaste-app.vercel.app%2F&demo-image=https%3A%2F%2Fpaste-app.vercel.app%2Fthumbnail.png&integration-ids=oac_jnzmjqM10gllKmSrG0SGrHOH)
 
 [![123Paste](./public/thumbnail.png)](https://paste-app.vercel.app)
 
 ## How it works
 This application leverages Next.js and MongoDB to seamlessly store and retrieve user-submitted code snippets. Snippets are securely stored in a MongoDB database and can be conveniently accessed through a unique URL generated upon submission, with Next.js efficiently managing the MongoDB connection.
+
+Also supports Dark/Light mode.
 
 ## Running Locally
 
