@@ -30,7 +30,7 @@ const Snippet = async ({ params }) => {
           <h1 className="text-3xl font-bold text-center">Snippet has expired</h1>
           <p className="text-center">This snippet has expired and is no longer available.</p>
 
-          <p className="text-center mt-12 mb-2 text-lg">To reward you for trying out 123paste, here&apos;s a game of cards!</p>
+          <p className="text-center mt-12 mb-2 text-lg">To reward you for trying out <span className="text-gradient font-bold">123Paste</span>, here&apos;s a game of cards!</p>
           <CardGame />
         </div>
       )}

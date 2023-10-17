@@ -13,6 +13,10 @@ import { copyToClipboard } from '@/lib/utils'
 
 const languages = [
   {
+    name: 'Plain Text',
+    value: 'plaintext',
+  },
+  {
     name: 'JavaScript',
     value: 'javascript',
   },
