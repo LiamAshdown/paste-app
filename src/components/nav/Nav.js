@@ -59,6 +59,7 @@ export default function Nav() {
                     <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                   )}
                 </Disclosure.Button>
+                <DarkLightToggle />
               </div>
             </div>
           </div>
